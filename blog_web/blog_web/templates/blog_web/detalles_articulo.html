@@ -10,12 +10,31 @@
                 <div class="card shadow-sm">
                     <h5 class="card-title">{{ art.titulo }}</h5>
                     <p class="card-text">{{ art.contenido }}</p>
-                    <img src="{{ art.imagen }}" style="height: 750;width: 550px;" alt="...">
+                    <img src="{{ art.imagen }}" style="height: 7500;width: 550px;" alt="...">
                     <br>                        
                     <p class="card-text">Creado: {{ art.fecha | date:"d/m/Y" }}</p>
-                    <p class="card-text">Autor: {{ art.autor }}</p>
+                    <p class="card-text">Autor: {{ art.autor }}</p>  
                 </div>
             </div>
+        </div>
+            <div class="container">
+                <div class="col-lg-8 mx-auto">
+                    {% if user.is_authenticated %}
+                    <H2>Comentar</H2>
+                    <form action="" class="Formulario_Create_Comentario" method="post">
+                     {% csrf_token %}
+                     {{ formulario.as_p }}
+                     <button type="submit" id="bntEnviar" class="button">Comentar</button>
+                      </form>
+                    {% endif %}
+                     <h3>Comentarios</h3>
+                     {% for comentario in comentarios %}
+                      <p>{{ comentario.nom_usr}}: {{ comentario.contenido}}</p>
+                     {% endfor %}
+                </div>
+                        
+            </div>
+        <div>
     </div>
 </section>
 {% endblock %}

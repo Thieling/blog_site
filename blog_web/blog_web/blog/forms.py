@@ -2,7 +2,7 @@ from django import forms
 #from django.forms import ModelForm
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
-from .models import Articulo, Avatar
+from .models import Articulo, Avatar, Comentario
 
 class CrearAvatarForm(forms.ModelForm):
     class Meta:
@@ -79,3 +79,13 @@ class EditarUsuarioForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email']
+
+class CrearComentarioForm(forms.ModelForm):
+  class Meta:
+    model = Comentario
+    fields = ['nom_usr', 'contenido', 'activo']
+    labels = {
+            'nom_usr': 'Nombre de Usuario',
+            'contenido': 'Comentario',
+            'activo': 'Activo',       
+    }

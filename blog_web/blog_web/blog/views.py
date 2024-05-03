@@ -8,7 +8,7 @@ from django.db.models import Q
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from .models import Articulo, Avatar
-from .forms import CrearUsuarioForm, ArticuloSearchForm, CrearArticuloForm, CrearAvatarForm, EditarUsuarioForm
+from .forms import CrearUsuarioForm, ArticuloSearchForm, CrearArticuloForm, CrearAvatarForm, EditarUsuarioForm, CrearComentarioForm
 from django.views.generic import (
     ListView,
     DetailView,
@@ -60,10 +60,10 @@ def view_crear_articulo(request):
             nuevo_articulo.save()
             return view_articulo_detalles(request, nuevo_articulo.id_articulo)
 
-def view_articulo_detalles(request, art_id):
-    articulo = Articulo.objects.get(id_articulo=art_id)
-   
-    return render(request, 'blog_web/detalles_articulo.html', {'art':articulo}) #'comentarios':comentarios, 'formulario':form})
+#def view_articulo_detalles(request, art_id):
+#    articulo = Articulo.objects.get(id_articulo=art_id)
+#   
+#    return render(request, 'blog_web/detalles_articulo.html', {'art':articulo}) #'comentarios':comentarios, 'formulario':form})
 
 def view_crear_usuario_form(request):
     data = {
@@ -160,6 +160,7 @@ def view_avatar(request):
 
 
 class EditarUsuarioView(LoginRequiredMixin, UpdateView):
+    
     model = User
     form_class = EditarUsuarioForm
     template_name = 'blog_web/editar_usuario.html'
@@ -167,3 +168,16 @@ class EditarUsuarioView(LoginRequiredMixin, UpdateView):
 
     def get_object(self):
         return self.request.user
+
+def view_articulo_detalles(request, art_id):
+    articulo = Articulo.objects.get(id_articulo=art_id)
+    comentarios = articulo.comentarios.filter(activo=True)
+    if request.method == 'POST':
+        form = CrearComentarioForm(request.POST)
+        if form.is_valid():
+            new_form = form.save(commit=False) #esto hace que no se guarde hasta que el Usuario haga click en el boton
+            new_form.articulo = articulo
+            new_form.save()
+    else:
+        form = CrearComentarioForm
+    return render(request, 'blog_web/detalles_articulo.html', {'art':articulo, 'comentarios':comentarios, 'formulario':form})
