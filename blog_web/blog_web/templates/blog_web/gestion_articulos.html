@@ -1,0 +1,35 @@
+{% extends 'blog_web/base.html' %}
+
+{% block title %} Listado de Articulos {% endblock %}
+
+{% block content %}
+
+<body>
+<section class="py-5">
+    <div class="container">
+        <h2>Haga click en boton crear para crear un Articulo <a href="{% url 'crear-articulos' %}" class="btn btn-success btn-sm">Crear</a></h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Titulo</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Autor</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for articulo in arts %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td><a href="{% url 'detalles-articulo' articulo.id_articulo %}">{{ articulo.titulo }}</a></td>
+                    <td>{{ articulo.fecha }}</td>
+                    <td>{{ articulo.autor }}</td>
+                    <td><a href="{% url 'editar-articulo' articulo.id_articulo %}" class="btn btn-primary btn-sm">Editar</a></td>
+                    <td><a href="{% url 'borrar-articulo' articulo.id_articulo %}" class="btn btn-danger btn-sm">Eliminar</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

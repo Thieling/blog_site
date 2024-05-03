@@ -1,0 +1,14 @@
+{% extends 'blog_web/base.html' %}
+
+{% block title %}Crear Articulo{% endblock %}
+
+{% block content %}
+<h2>Crear Articulo</h2>
+<form action="" class="formulario_create_Usuario" method="post">
+    {% csrf_token %} <!-- sino pongo este token los datos no ingresan-->
+    {{ form.as_p }}
+    <br> <!-- salto en blanco-->
+   <button type="submit" id="bntEnviar" class="button">Crear</button>
+</form>
+{{ mensaje }}
+{% endblock %}

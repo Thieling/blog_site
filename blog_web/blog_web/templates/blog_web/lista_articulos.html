@@ -1,0 +1,32 @@
+{% extends 'blog_web/base.html' %}
+
+{% block title %} Listado de Articulos {% endblock %}
+
+{% block content %}
+
+<body>
+<section class="py-5">
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Titulo</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Autor</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for articulo in arts %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td><a href="{% url 'detalles-articulo' articulo.id_articulo %}">{{ articulo.titulo }}</a></td>
+                    <td>{{ articulo.fecha }}</td>
+                    <td>{{ articulo.autor }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

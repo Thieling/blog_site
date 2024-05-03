@@ -1,0 +1,27 @@
+{% extends 'blog_web/base.html' %}
+
+{% block title %}Modificar Articulo{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <h2 class="mb-4">Modificar Articulo</h2>
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="card shadow-sm">
+                    <div class="card-header">
+                        Datos del Articulo
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="">
+                            {% csrf_token %}  <!-- CSRF Token added here -->
+                            {{ form.as_p }}
+                         <button type="submit" id="bntEnviar" class="button">Actualizar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

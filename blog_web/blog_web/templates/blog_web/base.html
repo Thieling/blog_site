@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+   
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} Blog {% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'blog_web/css/bootstrap.css' %}">
+</head>
+
+<body>
+    
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">HOME </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLinkProducto" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        MENU
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLinkProducto">
+                        <a class="dropdown-item" href="{% url 'todos-articulos' %}">Lista de Articulos</a>
+                        <a class="dropdown-item" href="{% url 'buscar-articulos' %}">Buscar un Articulo</a>
+                        <a class="dropdown-item" href="{% url 'about' %}">Acerca</a>
+                    </div>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLinkProducto" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Articulos
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLinkProducto">
+                        <a class="dropdown-item" href="{% url 'crear-articulos' %}">Crear Articulo</a>
+                        <a class="dropdown-item" href="{% url 'gestion-articulos' %}">Gestion de Articulos</a>
+                    </div>                    
+                </li>
+                {% endif %}
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="">{{ user }} </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'editar-perfil' %}">Editar </a>
+                    </li>
+                    <li class="nav-item">
+                        {% if user.avatar.image %}
+                        <img src="{{ user.avatar.image.url }}" alt="Avatar" style="height: 40px; width: 40px; border-radius: 50%;">
+                        {% endif %}
+                        <li class="nav-item">
+                            <a href="{% url 'agregar-avatar' %}" class="nav-link">Agregar Avatar </a>
+                        </li>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'cerrar-sesion' %}">Cerrar Sesión </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'iniciar-sesion' %}">Login </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'crear-usuario' %}">Crear Usuario </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <!-- Main content -->
+    <div class="container mt-4">
+        {% block content %}
+        <section class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        <div class="card shadow-sm">
+                            <h5 class="card-title">¡Bienvenidos!</h5>
+                            <p>Este blog, fue desarrollado durante el curso de Python de CODERHOUSE en el se pueden encontrar
+                                articulos de todo tipo, desde tecnologia hasta recetas de cocina. Espero lo disfruten como, yo
+                                disfrute su desarrollo.
+                            </p>
+                            <img src="https://mailrelay.com/wp-content/uploads/2018/03/que-es-un-blog-1.png" style="height: 750;width: 550px;" alt="...">
+                            <br>
+                        </div>
+                    </div>
+            </div>
+        </section>
+        {% endblock content %}
+    </div>
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
